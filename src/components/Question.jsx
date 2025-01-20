@@ -80,7 +80,7 @@ export default function Question ({questions, index,rigth,setRigth,almostRigth,s
 const QuestionCss = styled.div`
     height: ${({ question, questions, face }) => (question === questions.answer ? "fit-content" : face === "front-face face" ? "8vh" : "16vh")};
     border-radius: 10px;
-    margin: 20px;
+   margin-top: 3vh;
     box-shadow: 0px 4px 5px 0px #00000026;
     transition: all .5s;
     font-family: "Recursive", serif;
