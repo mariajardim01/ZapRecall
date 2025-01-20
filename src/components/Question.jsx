@@ -11,22 +11,24 @@ export default function Question ({questions, index,rigth,setRigth,almostRigth,s
     const  [question,setQuestion] =  useState(`Pergunta ${index + 1}`)
     const [ nameImage, setNameImage] = useState(play);
     const [ color, setColor] = useState("black");
+    const [ isTurn, setIsTurn] = useState("");
 
 
     function clickedFace (){
-       
+        if (face == "front-face face" ){
+
+           setFace(`back-face face`)
+           setQuestion(questions.question)
+            setNameImage(turn)
+            setIsTurn("true")
+        }
        
 
     }
 
     function turnCard(){
-        if (face == "front-face face" ){
-
-            setFace(`back-face face`)
-            setQuestion(questions.question)
-             setNameImage(turn)}else{
-
-        setQuestion(questions.answer)}
+        setQuestion(questions.answer)
+        
     }
 
     function forgot (){
@@ -56,10 +58,10 @@ export default function Question ({questions, index,rigth,setRigth,almostRigth,s
     
     return (
         
-        <QuestionCss face={face} nameimage={nameImage} question={question} questions={questions} color={color}>
+        <QuestionCss face={face} nameimage={nameImage} question={question} questions={questions} color={color} isTurn={isTurn}>
             <div 
                 className={face}
-               >
+                onClick={clickedFace}>
                 
                  <h1>{question}</h1>
 
@@ -76,13 +78,11 @@ export default function Question ({questions, index,rigth,setRigth,almostRigth,s
 }
 
 const QuestionCss = styled.div`
-    height: ${({face}) => (face === "front-face face" ? "8vh" : "16vh")};
-    width:100%;
+    height: ${({ question, questions, face }) => (question === questions.answer ? "fit-content" : face === "front-face face" ? "8vh" : "16vh")};
     border-radius: 10px;
-    margin-top: 20px;
-    margin-bottom:20px;
+    margin: 20px;
     box-shadow: 0px 4px 5px 0px #00000026;
-    
+    transition: all .5s;
     font-family: "Recursive", serif;
     position: relative;
     
@@ -110,7 +110,7 @@ const QuestionCss = styled.div`
     .face {
     height:${({face}) => (face === "front-face face" ? "8vh" : "16vh")};
     width: 100%;
-   
+    
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 1px 1px 1px rgba(0,0,0,.3);
@@ -133,7 +133,7 @@ const QuestionCss = styled.div`
         height: ${({ question, questions }) => (question === questions.answer ? "fit-content" : "100%")};
     }
     &:active .back-face {
-     transform: rotateY(-180deg);
+     transform: ${({isTurn})=>{isTurn == "true" ? "rotateY(-180deg)" : ""}};
     }
     .buttons{
         margin-top: 3%;
