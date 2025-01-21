@@ -22,11 +22,25 @@ const HeaderCss = styled.div`
 
      img{
         height: 80%;
+        min-height: 36px;
     }
 
     h1{
         font-family: "Righteous", serif;
         font-size: 36px ;
         color: white;
+    }
+
+    @media(min-width: 900px){
+        h1{
+            font-size: 45px;
+        }
+     
+    }
+    @media(max-height: 800px){
+        h1{
+            font-size: calc(2em + 0.9vh);
+        }
+     
     }
 `

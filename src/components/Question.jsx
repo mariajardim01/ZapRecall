@@ -20,14 +20,19 @@ export default function Question ({questions, index,rigth,setRigth,almostRigth,s
            setFace(`back-face face`)
            setQuestion(questions.question)
             setNameImage(turn)
-            setIsTurn("true")
+            
+            
         }
        
 
     }
 
     function turnCard(){
+       
         setQuestion(questions.answer)
+        setIsTurn("false")
+        
+        
         
     }
 
@@ -37,6 +42,7 @@ export default function Question ({questions, index,rigth,setRigth,almostRigth,s
         setFace(`front-face face`)
         setNameImage(fail)
         setWrong([...wrong, questions.question])
+        setIsTurn("true")
     }
 
     function almostForgot(){
@@ -45,20 +51,23 @@ export default function Question ({questions, index,rigth,setRigth,almostRigth,s
         setFace(`front-face face`)
         setNameImage(almost)
         setAlmostRigth([...almostRigth, questions.question])
+        setIsTurn("true")
     }
     function remember(){
+        setIsTurn("true")
         setColor("#2FBE34")
         setQuestion(`Pergunta ${index + 1}`)
         setFace(`front-face face`)
         setNameImage(success)
         setRigth([...rigth, questions.question])
         
+        
     }
 
     
     return (
         
-        <QuestionCss face={face} nameimage={nameImage} question={question} questions={questions} color={color} isTurn={isTurn}>
+        <QuestionCss face={face} nameimage={nameImage} question={question} questions={questions} color={color} isTurn={isTurn} turn={turn}>
             <div 
                 className={face}
                 onClick={clickedFace}>
@@ -86,8 +95,9 @@ const QuestionCss = styled.div`
     font-family: "Recursive", serif;
     position: relative;
     
+    
     img{
-        height: ${({ nameimage }) => (nameimage === turn ? "1vh%" : "3vh")};
+        height: ${({ nameimage }) => (nameimage === turn ? "2.2vh" : "3vh")};
         position:absolute;
         bottom: ${({ nameimage }) => (nameimage === turn ? "5px" : "30%")};
         right: ${({ nameimage }) => (nameimage === turn ? "5px" : "20px")};
@@ -105,8 +115,9 @@ const QuestionCss = styled.div`
         border-radius: 5px;
         border: none;
         color: white;
+        transform: translateY(4px);
     }
-
+    &:active button{transform: translateY(4px);}
     .face {
     height:${({face}) => (face === "front-face face" ? "8vh" : "16vh")};
     width: 100%;
@@ -127,14 +138,18 @@ const QuestionCss = styled.div`
     transition: all .5s;
     transform-style: preserve-3d;
     pointer-events:  ${({color})=>(color != "black" ? "none" : "")};
+    
     }
+
+   
+    
     .back-face{
         background-color: #FFFFD4;
         height: ${({ question, questions }) => (question === questions.answer ? "fit-content" : "100%")};
+        transform: ${({question, questions})=>  question == questions.question ? "rotateY(360deg)" : ""}
+      
     }
-    &:active .back-face {
-     transform: ${({isTurn})=>{isTurn == "true" ? "rotateY(-180deg)" : ""}};
-    }
+    
     .buttons{
         margin-top: 3%;
         display: flex;
@@ -149,6 +164,31 @@ const QuestionCss = styled.div`
     }
     .green{
         background-color: #2FBE34;
+    }
+
+    @media(min-width: 900px){
+       .face{
+        font-size:x-large;
+        
+       }
+       button{
+        font-size: large;
+       }
+     
+    }
+    @media(max-height: 800px){
+        margin-bottom:20px;
+        button{
+            height: fit-content;
+            min-height: 36px;
+        }
+        
+        .face{
+            box-sizing: border-box;
+        
+        }
+        
+     
     }
     
     `

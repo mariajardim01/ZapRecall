@@ -17,5 +17,12 @@ const Container = styled.div`
     width: 100vw;
     box-sizing: border-box;
     padding: 20px;
+
+    @media(min-width: 900px){
+        width: 60vw;
+        display: flex;
+        flex-direction: column;
+     
+    }
 `
 
